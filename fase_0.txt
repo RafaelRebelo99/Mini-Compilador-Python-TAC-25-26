@@ -1,0 +1,217 @@
+================================================================================
+FASE 1 - OPERADORES E PALAVRAS-CHAVE DO PYTHON
+Mini Compilador de Python - TAC
+================================================================================
+
+================================================================================
+SECÇÃO 1: SÍMBOLOS
+================================================================================
+
+--------------------------------------------------------------------------------
+1. OPERADORES ARITMÉTICOS
+--------------------------------------------------------------------------------
++       Adição
+-       Subtração
+*       Multiplicação
+/       Divisão (resultado float)
+//      Divisão inteira (floor division)
+%       Módulo (resto da divisão)
+**      Exponenciação
+
+--------------------------------------------------------------------------------
+2. OPERADORES RELACIONAIS
+--------------------------------------------------------------------------------
+==      Igual a
+!=      Diferente de
+<       Menor que
+>       Maior que
+<=      Menor ou igual a
+>=      Maior ou igual a
+
+--------------------------------------------------------------------------------
+3. OPERADORES BOOLEANOS (SÍMBOLOS / BITWISE)
+--------------------------------------------------------------------------------
+&       AND bit a bit
+|       OR bit a bit
+^       XOR bit a bit
+~       NOT bit a bit (complemento)
+<<      Deslocamento de bits para a esquerda
+>>      Deslocamento de bits para a direita
+
+--------------------------------------------------------------------------------
+4. SÍMBOLOS DE ATRIBUIÇÃO
+--------------------------------------------------------------------------------
+=       Atribuição simples
++=      Atribuição com adição
+-=      Atribuição com subtração
+*=      Atribuição com multiplicação
+/=      Atribuição com divisão
+//=     Atribuição com divisão inteira
+%=      Atribuição com módulo
+**=     Atribuição com exponenciação
+&=      Atribuição com AND bitwise
+|=      Atribuição com OR bitwise
+^=      Atribuição com XOR bitwise
+<<=     Atribuição com deslocamento à esquerda
+>>=     Atribuição com deslocamento à direita
+:=      Operador walrus (atribuição em expressão)
+
+--------------------------------------------------------------------------------
+5. SÍMBOLOS IDENTIFICADORES DE TIPOS DE DADOS
+--------------------------------------------------------------------------------
+" " / ' '   Delimitadores de strings
+""" """     Delimitadores de strings multilinhas
+[ ]         Identificador de lista (list)
+{ }         Identificador de dicionário (dict) ou conjunto (set)
+( )         Identificador de tuplo (tuple)
+.           Separador decimal em floats / acesso a atributos
+0-9         Dígitos - identificam literais inteiros ou floats
+0x          Prefixo de literal hexadecimal (ex: 0xFF)
+0o          Prefixo de literal octal (ex: 0o77)
+0b          Prefixo de literal binário (ex: 0b1010)
+j / J       Sufixo de número complexo (ex: 3j)
+
+--------------------------------------------------------------------------------
+6. SÍMBOLO IDENTIFICADOR DE INÍCIO DE BLOCO
+--------------------------------------------------------------------------------
+:           Dois pontos - marca o início de um bloco de código
+            (usado após if, elif, else, for, while, def, class, try, etc.)
+            O bloco é delimitado pela indentação (espaços/tab)
+
+================================================================================
+SECÇÃO 2: PALAVRAS
+================================================================================
+
+--------------------------------------------------------------------------------
+1. PALAVRAS IDENTIFICADORAS DE BLOCOS
+--------------------------------------------------------------------------------
+if          Condicional
+elif        Condicional alternativa
+else        Alternativa final do condicional
+for         Ciclo com iteração
+while       Ciclo com condição
+def         Definição de função
+class       Definição de classe
+try         Bloco de tentativa (tratamento de erros)
+except      Captura de exceção
+finally     Bloco executado sempre (após try/except)
+with        Gestor de contexto
+match       Correspondência de padrões (Python 3.10+)
+case        Caso no match (Python 3.10+)
+
+--------------------------------------------------------------------------------
+2. TIPOS DE DADOS
+--------------------------------------------------------------------------------
+int         Inteiro (ex: 42, -10)
+float       Ponto flutuante (ex: 3.14, -0.5)
+str         Cadeia de caracteres (ex: "texto")
+bool        Booleano (True ou False)
+list        Lista mutável (ex: [1, 2, 3])
+tuple       Tuplo imutável (ex: (1, 2, 3))
+dict        Dicionário (ex: {"chave": "valor"})
+set         Conjunto (ex: {1, 2, 3})
+frozenset   Conjunto imutável
+complex     Número complexo (ex: 3+4j)
+bytes       Sequência de bytes imutável
+bytearray   Sequência de bytes mutável
+memoryview  Vista de memória de bytes
+NoneType    Tipo do valor None (ausência de valor)
+
+--------------------------------------------------------------------------------
+3. FUNÇÕES BUILT-IN
+--------------------------------------------------------------------------------
+print()         Imprime na consola
+input()         Lê entrada do utilizador
+len()           Retorna o comprimento de um objeto
+range()         Gera uma sequência de números
+type()          Retorna o tipo de um objeto
+int()           Converte para inteiro
+float()         Converte para float
+str()           Converte para string
+bool()          Converte para booleano
+list()          Converte para lista
+tuple()         Converte para tuplo
+dict()          Cria dicionário
+set()           Cria conjunto
+abs()           Valor absoluto
+max()           Valor máximo
+min()           Valor mínimo
+sum()           Soma de um iterável
+sorted()        Retorna lista ordenada
+reversed()      Itera em ordem inversa
+enumerate()     Itera com índice e valor
+zip()           Combina iteráveis
+map()           Aplica função a um iterável
+filter()        Filtra elementos de um iterável
+open()          Abre um ficheiro
+isinstance()    Verifica se objeto é instância de tipo
+issubclass()    Verifica herança entre classes
+hasattr()       Verifica se objeto tem atributo
+getattr()       Obtém atributo de objeto
+setattr()       Define atributo de objeto
+delattr()       Elimina atributo de objeto
+dir()           Lista atributos de objeto
+vars()          Retorna dicionário de atributos
+id()            Retorna identificador único do objeto
+hash()          Retorna valor hash do objeto
+hex()           Converte inteiro para hexadecimal
+oct()           Converte inteiro para octal
+bin()           Converte inteiro para binário
+chr()           Retorna carácter do código Unicode
+ord()           Retorna código Unicode de carácter
+round()         Arredonda número
+pow()           Calcula potência
+divmod()        Retorna quociente e resto
+all()           True se todos os elementos forem True
+any()           True se algum elemento for True
+callable()      Verifica se objeto é chamável
+iter()          Retorna iterador
+next()          Retorna próximo elemento do iterador
+super()         Acede à classe pai
+repr()          Retorna representação string do objeto
+format()        Formata um valor
+staticmethod()  Define método estático
+classmethod()   Define método de classe
+property()      Define propriedade de classe
+object()        Objeto base de todas as classes
+eval()          Avalia expressão Python em string
+exec()          Executa código Python em string
+compile()       Compila código Python
+globals()       Retorna variáveis globais
+locals()        Retorna variáveis locais
+
+--------------------------------------------------------------------------------
+4. OPERADORES BOOLEANOS (PALAVRAS)
+--------------------------------------------------------------------------------
+and         E lógico (retorna o primeiro valor falso ou o último)
+or          OU lógico (retorna o primeiro valor verdadeiro ou o último)
+not         NÃO lógico (negação)
+in          Pertença (verifica se elemento está no iterável)
+not in      Não pertença
+is          Identidade (verifica se são o mesmo objeto)
+is not      Não identidade
+
+--------------------------------------------------------------------------------
+5. DEMAIS PALAVRAS-CHAVE
+--------------------------------------------------------------------------------
+import      Importa um módulo
+from        Importa elemento específico de um módulo
+as          Cria alias para módulo ou exceção
+return      Retorna valor de uma função
+yield       Retorna valor de um gerador (mantém estado)
+yield from  Delega para sub-gerador
+pass        Instrução nula (não faz nada)
+break       Interrompe o ciclo atual
+continue    Passa para a próxima iteração do ciclo
+del         Elimina variável ou elemento
+global      Declara variável como global
+nonlocal    Declara variável de escopo externo (não global)
+raise       Lança uma exceção
+assert      Verifica condição (lança AssertionError se falsa)
+lambda      Cria função anónima
+True        Literal booleano verdadeiro
+False       Literal booleano falso
+None        Ausência de valor / nulo
+async       Define função assíncrona
+await       Aguarda resultado de função assíncrona
+
