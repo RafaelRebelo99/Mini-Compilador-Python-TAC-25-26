@@ -1,4 +1,4 @@
-lexer grammar PythonLexer;
+lexer grammar fase_2_lexer;
 
 
 // PALAVRAS-CHAVE - IDENTIFICADORES DE BLOCOS
@@ -163,4 +163,5 @@ COMMENT     : '#' ~[\r\n]* -> skip ;
 ID          : LETTER (LETTER | DIGIT)* ;
 fragment LETTER : [a-zA-Z_] ;
 fragment DIGIT  : [0-9] ;
-WS          : [ \t\r\n]+ -> skip ;
+NEWLINE     : '\r'? '\n' ;
+WS          : [ \t]+ -> skip ;
