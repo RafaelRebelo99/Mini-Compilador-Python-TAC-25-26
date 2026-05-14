@@ -6,10 +6,10 @@ code : stat* EOF ;
 
 stat : expr NEWLINE ;
 
-expr : ids
+expr : expr OP expr         // operacoesComExpressoes
+     | LPAREN expr RPAREN   // expressoesEntreParenteses
+     | ids
      | numeros
-     | operacoesComExpressoes
-     | expressoesEntreParenteses
      ;
 
 ids : ID ;
@@ -21,7 +21,3 @@ numeros : INT_LIT
         | BIN_LIT
         | COMPLEX_LIT
         ;
-
-operacoesComExpressoes : expr (PLUS | MINUS | STAR | SLASH | DOUBLE_SLASH | PERCENT | DOUBLE_STAR) expr ;
-
-expressoesEntreParenteses : LPAREN expr RPAREN ;

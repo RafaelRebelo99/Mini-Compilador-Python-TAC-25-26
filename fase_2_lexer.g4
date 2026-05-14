@@ -66,15 +66,9 @@ ASYNC       : 'async' ;
 AWAIT       : 'await' ;
 
 
-// OPERADORES ARITMÉTICOS (tokens mais longos primeiro)
-
-DOUBLE_STAR : '**' ;
-DOUBLE_SLASH: '//' ;
-PLUS        : '+' ;
-MINUS       : '-' ;
-STAR        : '*' ;
-SLASH       : '/' ;
-PERCENT     : '%' ;
+// OPERADORES ARITMÉTICOS (agrupados num token genérico para simplificar o parser)
+// tokens mais longos primeiro para maximal munch
+OP          : '**' | '//' | '+' | '-' | '*' | '/' | '%' ;
 
 
 // OPERADORES RELACIONAIS (tokens mais longos primeiro)
