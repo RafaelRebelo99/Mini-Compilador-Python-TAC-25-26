@@ -67,8 +67,8 @@ AWAIT       : 'await' ;
 
 
 // OPERADORES ARITMÉTICOS (agrupados num token genérico para simplificar o parser)
-// tokens mais longos primeiro para maximal munch
 OP          : '**' | '//' | '+' | '-' | '*' | '/' | '%' ;
+
 
 
 // OPERADORES RELACIONAIS (tokens mais longos primeiro)
@@ -157,5 +157,3 @@ COMMENT     : '#' ~[\r\n]* -> skip ;
 ID          : LETTER (LETTER | DIGIT)* ;
 fragment LETTER : [a-zA-Z_] ;
 fragment DIGIT  : [0-9] ;
-NEWLINE     : '\r'? '\n' ;
-WS          : [ \t]+ -> skip ;
