@@ -2,7 +2,7 @@ parser grammar fase_3_parser;
 
 options { tokenVocab = fase_2_lexer; }
 
-code : stat* EOF ;
+code : (stat | condicional)* EOF ;
 
 stat : (expr | query) NEWLINE ;
 
@@ -32,3 +32,8 @@ query : query (AND | OR) query
 valoresBooleanos : TRUE | FALSE ;
 
 relacoesEntreExpressoes : expr (EQ | NEQ | LT | GT | LTE | GTE) expr ;
+
+condicional : IF query COLON NEWLINE stat+
+              (ELIF query COLON NEWLINE stat+)*
+              (ELSE COLON NEWLINE stat+)?
+            ;

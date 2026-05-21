@@ -157,3 +157,5 @@ COMMENT     : '#' ~[\r\n]* -> skip ;
 ID          : LETTER (LETTER | DIGIT)* ;
 fragment LETTER : [a-zA-Z_] ;
 fragment DIGIT  : [0-9] ;
+NEWLINE     : '\r'? '\n' ;
+WS          : [ \t]+ -> skip ;
