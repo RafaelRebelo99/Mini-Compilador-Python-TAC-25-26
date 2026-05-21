@@ -1,26 +1,27 @@
 # Mini-Compilador-Python-TAC-25-26
 
-# Mini Compilador em Python
+Um mini compilador pedagógico que utiliza o **ANTLR4** (ANother Tool for Language Recognition) para o parsing da gramática e **Python** para a lógica de geração de código/execução.
 
-Um mini compilador pedagógico desenvolvido em Python para transformar uma linguagem de programação customizada em [código alvo, ex: Python Bytecode / C / Assembly / Resultado Executável]. 
-
-O objetivo principal deste projeto é entender os fundamentos da teoria dos compiladores, aplicando conceitos de análise léxica, sintática e geração de código.
+O objetivo deste projeto é entender o funcionamento de um compilador moderno, automatizando a criação do Lexer e do Parser por meio de uma gramática formal.
 
 ---
+
 
 ## 🚀 O Pipeline do Compilador
 
 O projeto foi estruturado seguindo as etapas clássicas de construção de um compilador:
 
-1. **Análise Léxica (Lexer):** Lê o código-fonte (string) e o quebra em uma sequência de unidades significativas chamadas *Tokens*.
-2. **Análise Sintática (Parser):** Consome os tokens e verifica se eles seguem as regras gramaticais da linguagem, construindo uma **Árvore de Sintaxe Abstrata (AST)**.
-3. **Análise Semântica:** Garante que o código faz sentido lógico (ex: checagem de tipos e se as variáveis foram declaradas).
-4. **Geração de Código:** Percorre a AST e gera o resultado final esperado.
+1. **Análise Léxica (Lexer):** Definimos as regras léxicas e sintáticas em um único arquivo.
+2. **Análise Sintática (Parser):** Consome os tokens e verifica se eles seguem as regras gramaticais da linguagem, construindo uma **Árvore de Sintaxe Abstrata (AST)**.  O ANTLR lê o `.g4` e gera os arquivos, segundo a árvore de análise sintática (Parse Tree).
+3. **Análise Semântica:** Garante que o código faz sentido lógico.
+4. **Geração de Código:** Em Python, estendemos a classe gerada pelo ANTLR para "visitar" cada nó da árvore e realizar a análise semântica ou a geração do código alvo.
 
 ---
 
-## 🛠️ Tecnologias Utilizadas:
+## 🛠️ Tecnologias Utilizadas: 
 
+**ANTLR4** (ANother Tool for Language Recognition) para o parsing da gramática.
+**Python** para a lógica de geração de código/execução.
 
 ---
 
