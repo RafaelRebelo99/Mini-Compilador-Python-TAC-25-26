@@ -1,4 +1,4 @@
-# Mini-Compilador-Python-TAC-25-26
+# 🤖 Mini-Compilador-Python-TAC-25-26
 
 Um mini compilador pedagógico que utiliza o **ANTLR4** (ANother Tool for Language Recognition) para o parsing da gramática e **Python** para a lógica de geração de código/execução.
 
@@ -7,7 +7,7 @@ O objetivo deste projeto é entender o funcionamento de um compilador moderno, a
 ---
 
 
-## 🚀 O Pipeline do Compilador
+## 🏗️ O Pipeline do Compilador 
 
 O projeto foi estruturado seguindo as etapas clássicas de construção de um compilador:
 
@@ -20,8 +20,9 @@ O projeto foi estruturado seguindo as etapas clássicas de construção de um co
 
 ## 🛠️ Tecnologias Utilizadas: 
 
-**ANTLR4** (ANother Tool for Language Recognition) para o parsing da gramática.
-**Python** para a lógica de geração de código/execução.
+ **ANTLR4 🧬** (ANother Tool for Language Recognition) para o parsing da gramática.
+
+**Python ⚙️** para a lógica de geração de código/execução.
 
 ---
 
