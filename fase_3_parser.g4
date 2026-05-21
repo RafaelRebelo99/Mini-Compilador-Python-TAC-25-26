@@ -32,7 +32,7 @@ query : query (AND | OR) query
 valoresBooleanos : TRUE | FALSE ;
 
 relacoesEntreExpressoes : expr (EQ | NEQ | LT | GT | LTE | GTE) expr ;
-
+//fase 5
 condicional : IF query COLON NEWLINE stat+
               (ELIF query COLON NEWLINE stat+)*
               (ELSE COLON NEWLINE stat+)?
