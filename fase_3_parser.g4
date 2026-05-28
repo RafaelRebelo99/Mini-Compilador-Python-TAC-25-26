@@ -10,12 +10,13 @@ stat : (expr | query) NEWLINE
      | RETURN expr? NEWLINE
      ;
 
-expr : expr OP expr         
-     | OP expr              
-     | LPAREN expr RPAREN   
+expr : expr OP expr
+     | OP expr
+     | LPAREN expr RPAREN
      | func_call
      | ids
      | numeros
+     | STRING
      ;
 
 ids : ID ;
@@ -62,7 +63,10 @@ args : expr (COMMA expr)* ;
                                                            //fase 6.5
 loop_while : WHILE query COLON NEWLINE corpo+ ;
                                                            //fase 6.75
-loop_for : FOR ID IN expr COLON NEWLINE corpo+ ;
+loop_for : FOR for_vars IN expr COLON NEWLINE corpo+
+           (ELSE COLON NEWLINE corpo+)? ;
+
+for_vars : ID (COMMA ID)* ;
 
 
 /* Exercício Fase 6.5:
@@ -75,7 +79,7 @@ while (True & g(x)):
             continue
         return x
     -x + 1. * (0j)
-    x
+    
     */
 
 /*Exercício Fase 6.75:
