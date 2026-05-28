@@ -4,10 +4,10 @@ options { tokenVocab = fase_2_lexer; }
 
 code : (stat | condicional | func | func_call NEWLINE | loop_while | loop_for)* EOF ;
 
-stat : (expr | query) NEWLINE
-     | BREAK NEWLINE
-     | CONTINUE NEWLINE
-     | RETURN expr? NEWLINE
+stat : (expr | query) NEWLINE?
+     | BREAK NEWLINE?
+     | CONTINUE NEWLINE?
+     | RETURN expr? NEWLINE?
      ;
 
 expr : expr OP expr
@@ -17,6 +17,10 @@ expr : expr OP expr
      | ids
      | numeros
      | STRING
+     | lista                                                   
+     | tupla
+     | set_lit
+     | dicionario
      ;
 
 ids : ID ;
@@ -60,34 +64,19 @@ param : ID (COLON tipo)? ;
 func_call : ID LPAREN args? RPAREN ;
 
 args : expr (COMMA expr)* ;
-                                                           //fase 6.5
+                                                           //fase 7
 loop_while : WHILE query COLON NEWLINE corpo+ ;
-                                                           //fase 6.75
+                                                           
 loop_for : FOR for_vars IN expr COLON NEWLINE corpo+
            (ELSE COLON NEWLINE corpo+)? ;
 
 for_vars : ID (COMMA ID)* ;
+                                                           //fase 8
+lista      : LBRACKET (expr (COMMA expr)*)? RBRACKET ;
 
+tupla      : LPAREN expr COMMA (expr (COMMA expr)*)? RPAREN ;
 
-/* Exercício Fase 6.5:
+set_lit    : LBRACE expr (COMMA expr)+ RBRACE ;
 
-while (True & g(x)):
-    def f(x: int) -> float:
-        if x > h(x):
-            break
-        else:
-            continue
-        return x
-    -x + 1. * (0j)
-    
-    */
+dicionario : LBRACE (expr COLON expr (COMMA expr COLON expr)*)? RBRACE ;
 
-/*Exercício Fase 6.75:
-if __name__ == "__main__":
-    for i in range(10):
-        range(10, 20)
-        range(1, 10, 3)
-        for i, j in zip(range(1, 11, 2), range(2, 11, 2)):
-            print(i, j)
-    else:
-        print("não deu certo") */
