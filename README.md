@@ -28,7 +28,16 @@ O projeto foi estruturado seguindo as etapas clássicas de construção de um co
 
 ## 📐 Sintaxe da Linguagem
 
-A linguagem suporta as seguintes operações básicas (exemplo):
+Lista de "checkboxes" com coisas que o compilador consegue fazer:
+
+```[check_list]
+- [x] Declaração e atribuição de variáveis (`x = 10;`)
+- [x] Operações aritméticas básicas (`+`, `-`, `*`, `/`)
+- [x] Estruturas de decisão (`if` / `else`)
+- [x] Loops e repetições (`while`)
+- [x] Função interna de output (`print()`)
+
+A linguagem suporta este codigo (exemplo):
 
 ```[nome_da_linguagem]
 # Exemplo de código na nova linguagem
