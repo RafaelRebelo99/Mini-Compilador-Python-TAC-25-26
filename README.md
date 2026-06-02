@@ -36,7 +36,7 @@ Lista de "checkboxes" com coisas que o compilador consegue fazer:
 - [x] Estruturas de decisão (`if` / `else`)
 - [x] Loops e repetições (`while`)
 - [x] Função interna de output (`print()`)
-
+```
 A linguagem suporta este codigo (exemplo):
 
 ```[nome_da_linguagem]
