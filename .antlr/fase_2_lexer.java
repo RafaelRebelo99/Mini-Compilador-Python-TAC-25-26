@@ -1,4 +1,4 @@
-// Generated from c:/A_Projetos_Faculdade/Mini-Compilador-Python-TAC-25-26/fase_2_lexer.g4 by ANTLR 4.13.1
+// Generated from /Users/rafaelrebelo/Mini-Compilador-Python-TAC-25-26/fase_2_lexer.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
