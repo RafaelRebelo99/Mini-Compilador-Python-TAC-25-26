@@ -2,13 +2,16 @@ parser grammar fase_3_parser;
 
 options { tokenVocab = fase_2_lexer; }
 
-code : (stat | condicional | func | func_call NEWLINE | loop_while | loop_for)* EOF ;
+code : (NEWLINE | stat | condicional | func | func_call NEWLINE | loop_while | loop_for)* EOF ;
 
-stat : (expr | query) NEWLINE?
-     | BREAK NEWLINE?
-     | CONTINUE NEWLINE?
-     | RETURN expr? NEWLINE?
+stat : assign NEWLINE
+     | (expr | query) NEWLINE
+     | BREAK NEWLINE
+     | CONTINUE NEWLINE
+     | RETURN expr? NEWLINE
      ;
+
+assign : ID (ASSIGN) expr ;
 
 expr : expr OP expr
      | OP expr

@@ -5,6 +5,10 @@ else:
     from fase_3_parser import fase_3_parser
     from fase_3_parserVisitor import fase_3_parserVisitor
 
+class ReturnException(Exception):
+    def __init__(self, value):
+        self.value = value
+
 class Compiler(fase_3_parserVisitor):
 
     def __init__(self):
@@ -17,48 +21,132 @@ class Compiler(fase_3_parserVisitor):
         return self.visitChildren(ctx)
 
     def visitStat(self, ctx:fase_3_parser.StatContext):
-        print(('Here', ctx.getText(), type(ctx)))
+        if ctx.getChild(0).getText() == 'return':
+            value = self.visit(ctx.expr()) if ctx.expr() else None
+            raise ReturnException(value)
         return self.visitChildren(ctx)
 
+# 10.3 Atribuição de variáveis
+    def visitAssign(self, ctx:fase_3_parser.AssignContext):
+        name = ctx.ID().getText()
+        value = self.visit(ctx.expr())
+        self.vars[name] = value
+        return value
+
+# 10.2 Avaliar expressões 
     def visitExpr(self, ctx:fase_3_parser.ExprContext):
-        print(('Here', ctx.getText(), type(ctx)))
+        count = ctx.getChildCount()
+
+        if count == 1:
+            if ctx.STRING():
+                text = ctx.STRING().getText()
+                return text[1:-1]
+            return self.visit(ctx.getChild(0))
+
+        elif count == 2:
+            op = ctx.getChild(0).getText()
+            val = self.visit(ctx.getChild(1))
+            return -val if op == '-' else val
+
+        elif count == 3:
+            if ctx.getChild(0).getText() == '(':
+                return self.visit(ctx.getChild(1))
+            left  = self.visit(ctx.getChild(0))
+            op    = ctx.getChild(1).getText()
+            right = self.visit(ctx.getChild(2))
+            ops = {'+': lambda a,b: a+b, '-': lambda a,b: a-b,
+                   '*': lambda a,b: a*b, '/': lambda a,b: a/b,
+                   '//': lambda a,b: a//b, '%': lambda a,b: a%b,
+                   '**': lambda a,b: a**b}
+            return ops[op](left, right)
+
         return self.visitChildren(ctx)
 
     def visitIds(self, ctx:fase_3_parser.IdsContext):
-        print(('Here', ctx.getText(), type(ctx)))
-        return self.visitChildren(ctx)
+        return self.vars.get(ctx.getText())
 
     def visitNumeros(self, ctx:fase_3_parser.NumerosContext):
-        print(('Here', ctx.getText(), type(ctx)))
-        return self.visitChildren(ctx)
+        text = ctx.getText()
+        if ctx.INT_LIT():     return int(text)
+        if ctx.FLOAT_LIT():   return float(text)
+        if ctx.HEX_LIT():     return int(text, 16)
+        if ctx.OCT_LIT():     return int(text, 8)
+        if ctx.BIN_LIT():     return int(text, 2)
+        if ctx.COMPLEX_LIT(): return complex(text)
+        return int(text)
 
     def visitQuery(self, ctx:fase_3_parser.QueryContext):
-        print(('Here', ctx.getText(), type(ctx)))
+        count = ctx.getChildCount()
+        if count == 1:
+            return self.visit(ctx.getChild(0))
+        elif count == 2:
+            op  = ctx.getChild(0).getText()
+            val = self.visit(ctx.getChild(1))
+            if op == 'not': return not val
+            if op == '~':   return ~val
+            return val
+        elif count == 3:
+            if ctx.getChild(0).getText() == '(':
+                return self.visit(ctx.getChild(1))
+            left  = self.visit(ctx.getChild(0))
+            op    = ctx.getChild(1).getText()
+            right = self.visit(ctx.getChild(2))
+            if op == 'and': return left and right
+            if op == 'or':  return left or right
+            if op == '&':   return left & right
+            if op == '|':   return left | right
+            if op == '^':   return left ^ right
         return self.visitChildren(ctx)
 
     def visitValoresBooleanos(self, ctx:fase_3_parser.ValoresBooleanosContext):
-        print(('Here', ctx.getText(), type(ctx)))
-        return self.visitChildren(ctx)
+        return ctx.getText() == 'True'
 
     def visitRelacoesEntreExpressoes(self, ctx:fase_3_parser.RelacoesEntreExpressoesContext):
-        print(('Here', ctx.getText(), type(ctx)))
-        return self.visitChildren(ctx)
+        left  = self.visit(ctx.getChild(0))
+        op    = ctx.getChild(1).getText()
+        right = self.visit(ctx.getChild(2))
+        ops = {'==': lambda a,b: a==b, '!=': lambda a,b: a!=b,
+               '<':  lambda a,b: a<b,  '>':  lambda a,b: a>b,
+               '<=': lambda a,b: a<=b, '>=': lambda a,b: a>=b}
+        return ops[op](left, right)
 
     def visitCorpo(self, ctx:fase_3_parser.CorpoContext):
-        print(('Here', ctx.getText(), type(ctx)))
         return self.visitChildren(ctx)
 
+# 10.5 Condicional if-elif-else
     def visitCondicional(self, ctx:fase_3_parser.CondicionalContext):
-        print(('Here', ctx.getText(), type(ctx)))
-        return self.visitChildren(ctx)
+        i = 0
+        n = ctx.getChildCount()
+        while i < n:
+            text = ctx.getChild(i).getText()
+            if text in ('if', 'elif'):
+                i += 1
+                query = ctx.getChild(i); i += 1
+                i += 2  # COLON NEWLINE
+                corpos = []
+                while i < n and type(ctx.getChild(i)).__name__ == 'CorpoContext':
+                    corpos.append(ctx.getChild(i)); i += 1
+                if self.visit(query):
+                    for c in corpos: self.visit(c)
+                    return None
+            elif text == 'else':
+                i += 3  # ELSE COLON NEWLINE
+                while i < n and type(ctx.getChild(i)).__name__ == 'CorpoContext':
+                    self.visit(ctx.getChild(i)); i += 1
+                return None
+            else:
+                i += 1
+        return None
 
     def visitTipo(self, ctx:fase_3_parser.TipoContext):
         print(('Here', ctx.getText(), type(ctx)))
         return self.visitChildren(ctx)
 
+# 10.4 Definição de funções
     def visitFunc(self, ctx:fase_3_parser.FuncContext):
-        print(('Here', ctx.getText(), type(ctx)))
-        return self.visitChildren(ctx)
+        func_name = ctx.ID().getText()
+        self.vars[func_name] = ctx
+        return None
 
     def visitParams(self, ctx:fase_3_parser.ParamsContext):
         print(('Here', ctx.getText(), type(ctx)))
@@ -68,24 +156,69 @@ class Compiler(fase_3_parserVisitor):
         print(('Here', ctx.getText(), type(ctx)))
         return self.visitChildren(ctx)
 
+ # 10.8 Chamada de funções
     def visitFunc_call(self, ctx:fase_3_parser.Func_callContext):
-        print(('Here', ctx.getText(), type(ctx)))
-        return self.visitChildren(ctx)
+        func_name = ctx.ID().getText()
+        args = [self.visit(a) for a in ctx.args().expr()] if ctx.args() else []
+
+        if func_name in self.vars and hasattr(self.vars[func_name], 'corpo'):
+            func_ctx = self.vars[func_name]
+            param_names = [p.ID().getText() for p in func_ctx.params().param()] if func_ctx.params() else []
+            saved = dict(self.vars)
+            for name, val in zip(param_names, args):
+                self.vars[name] = val
+            result = None
+            try:
+                for c in func_ctx.corpo():
+                    self.visit(c)
+            except ReturnException as r:
+                result = r.value
+            self.vars = saved
+            return result
+
+        builtin = __builtins__.get(func_name) if isinstance(__builtins__, dict) else getattr(__builtins__, func_name, None)
+        if builtin:
+            return builtin(*args)
+        raise NameError(f"Função '{func_name}' não definida")
 
     def visitArgs(self, ctx:fase_3_parser.ArgsContext):
-        print(('Here', ctx.getText(), type(ctx)))
         return self.visitChildren(ctx)
-
+ 
+ # 10.6 Loop while
     def visitLoop_while(self, ctx:fase_3_parser.Loop_whileContext):
-        print(('Here', ctx.getText(), type(ctx)))
-        return self.visitChildren(ctx)
+        while self.visit(ctx.query()):
+            for c in ctx.corpo():
+                self.visit(c)
+        return None
 
+ # 10.7 Loop for
     def visitLoop_for(self, ctx:fase_3_parser.Loop_forContext):
-        print(('Here', ctx.getText(), type(ctx)))
-        return self.visitChildren(ctx)
+        var_names = [t.getText() for t in ctx.for_vars().ID()]
+        iterable  = self.visit(ctx.expr())
+
+        loop_corpos, else_corpos, in_else = [], [], False
+        for i in range(ctx.getChildCount()):
+            child = ctx.getChild(i)
+            if child.getText() == 'else':
+                in_else = True
+            elif type(child).__name__ == 'CorpoContext':
+                (else_corpos if in_else else loop_corpos).append(child)
+
+        for item in iterable:
+            if len(var_names) == 1:
+                self.vars[var_names[0]] = item
+            else:
+                for i, name in enumerate(var_names):
+                    self.vars[name] = item[i]
+            for c in loop_corpos:
+                self.visit(c)
+
+        for c in else_corpos:
+            self.visit(c)
+
+        return None
 
     def visitFor_vars(self, ctx:fase_3_parser.For_varsContext):
-        print(('Here', ctx.getText(), type(ctx)))
         return self.visitChildren(ctx)
 
     def visitLista(self, ctx:fase_3_parser.ListaContext):

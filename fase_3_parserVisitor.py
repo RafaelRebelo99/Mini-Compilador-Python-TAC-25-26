@@ -19,6 +19,11 @@ class fase_3_parserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by fase_3_parser#assign.
+    def visitAssign(self, ctx:fase_3_parser.AssignContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by fase_3_parser#expr.
     def visitExpr(self, ctx:fase_3_parser.ExprContext):
         return self.visitChildren(ctx)
