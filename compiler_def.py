@@ -14,10 +14,10 @@ class Compiler(fase_3_parserVisitor):
     def __init__(self):
         super(Compiler, self).__init__()
         self.vars = {}
+        self.funcs = {}
         return None
 
     def visitCode(self, ctx:fase_3_parser.CodeContext):
-        print(('Here', ctx.getText(), type(ctx)))
         return self.visitChildren(ctx)
 
     def visitStat(self, ctx:fase_3_parser.StatContext):
@@ -122,7 +122,7 @@ class Compiler(fase_3_parserVisitor):
             if text in ('if', 'elif'):
                 i += 1
                 query = ctx.getChild(i); i += 1
-                i += 2  # COLON NEWLINE
+                i += 2  
                 corpos = []
                 while i < n and type(ctx.getChild(i)).__name__ == 'CorpoContext':
                     corpos.append(ctx.getChild(i)); i += 1
@@ -130,7 +130,7 @@ class Compiler(fase_3_parserVisitor):
                     for c in corpos: self.visit(c)
                     return None
             elif text == 'else':
-                i += 3  # ELSE COLON NEWLINE
+                i += 3  
                 while i < n and type(ctx.getChild(i)).__name__ == 'CorpoContext':
                     self.visit(ctx.getChild(i)); i += 1
                 return None
@@ -139,21 +139,18 @@ class Compiler(fase_3_parserVisitor):
         return None
 
     def visitTipo(self, ctx:fase_3_parser.TipoContext):
-        print(('Here', ctx.getText(), type(ctx)))
         return self.visitChildren(ctx)
 
 # 10.4 Definição de funções
     def visitFunc(self, ctx:fase_3_parser.FuncContext):
         func_name = ctx.ID().getText()
-        self.vars[func_name] = ctx
+        self.funcs[func_name] = ctx
         return None
 
     def visitParams(self, ctx:fase_3_parser.ParamsContext):
-        print(('Here', ctx.getText(), type(ctx)))
         return self.visitChildren(ctx)
 
     def visitParam(self, ctx:fase_3_parser.ParamContext):
-        print(('Here', ctx.getText(), type(ctx)))
         return self.visitChildren(ctx)
 
  # 10.8 Chamada de funções
@@ -161,8 +158,8 @@ class Compiler(fase_3_parserVisitor):
         func_name = ctx.ID().getText()
         args = [self.visit(a) for a in ctx.args().expr()] if ctx.args() else []
 
-        if func_name in self.vars and hasattr(self.vars[func_name], 'corpo'):
-            func_ctx = self.vars[func_name]
+        if func_name in self.funcs:
+            func_ctx = self.funcs[func_name]
             param_names = [p.ID().getText() for p in func_ctx.params().param()] if func_ctx.params() else []
             saved = dict(self.vars)
             for name, val in zip(param_names, args):
@@ -222,19 +219,16 @@ class Compiler(fase_3_parserVisitor):
         return self.visitChildren(ctx)
 
     def visitLista(self, ctx:fase_3_parser.ListaContext):
-        print(('Here', ctx.getText(), type(ctx)))
-        return self.visitChildren(ctx)
+        return [self.visit(e) for e in ctx.expr()]
 
     def visitTupla(self, ctx:fase_3_parser.TuplaContext):
-        print(('Here', ctx.getText(), type(ctx)))
-        return self.visitChildren(ctx)
+        return tuple(self.visit(e) for e in ctx.expr())
 
     def visitSet_lit(self, ctx:fase_3_parser.Set_litContext):
-        print(('Here', ctx.getText(), type(ctx)))
-        return self.visitChildren(ctx)
+        return {self.visit(e) for e in ctx.expr()}
 
     def visitDicionario(self, ctx:fase_3_parser.DicionarioContext):
-        print(('Here', ctx.getText(), type(ctx)))
-        return self.visitChildren(ctx)
+        exprs = ctx.expr()
+        return {self.visit(exprs[i]): self.visit(exprs[i+1]) for i in range(0, len(exprs), 2)}
 
 del (fase_3_parser, fase_3_parserVisitor)
